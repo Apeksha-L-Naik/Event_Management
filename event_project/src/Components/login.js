@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 const Login = () => {
   const [form, setForm] = useState({ email: '', password: '' });
   const [message, setMessage] = useState('');
-  const navigate = useNavigate(); // ← hook for navigation
+  const navigate = useNavigate();
 
   const handleChange = e => setForm({ ...form, [e.target.name]: e.target.value });
 
@@ -15,7 +15,7 @@ const Login = () => {
       const res = await axios.post('http://localhost:5000/api/auth/login', form);
       localStorage.setItem('token', res.data.token);
       setMessage('Login successful!');
-      navigate('/home'); // ← redirect to /home
+      navigate('/home');
     } catch (error) {
       setMessage(error.response?.data?.message || 'Error logging in');
     }
@@ -30,7 +30,8 @@ const Login = () => {
         <button type="submit">Login</button>
       </form>
       <p>{message}</p>
-      <p>Don’t have an account? <Link to="/register">Register</Link></p>
+      <p>Don’t have an account? <Link to="/">Register</Link></p>
+      <p><Link to="/admin-login">Admin?</Link></p>
     </div>
   );
 };
