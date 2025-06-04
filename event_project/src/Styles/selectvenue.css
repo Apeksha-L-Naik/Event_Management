@@ -1,0 +1,76 @@
+/* src/Styles/selectVenue.css */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Roboto:wght@400;500&display=swap');
+
+.selectvenue-container {
+  padding: 2rem;
+background-color: #f9f5f3;
+  min-height: 100vh;
+  font-family: 'Segoe UI', sans-serif;
+  background: url('https://i.pinimg.com/736x/db/80/32/db803252a945078a1178f99e300d0a4f.jpg');
+  background-repeat: no-repeat;
+   background-size: cover;  
+   background-position: center;
+}
+
+.selectvenue-heading {
+  font-size: 3rem;
+  text-align: center;
+  color: #5b4636;
+  font-family: 'Playfair Display', serif;
+  margin-bottom: 1.5rem;
+}
+
+.selectvenue-message {
+  text-align: center;
+  font-size: 1.1rem;
+  color: green;
+  margin-bottom: 1rem;
+}
+
+.selectvenue-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.selectvenue-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  width: 260px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  border-left: 5px solid #d88c5f;
+}
+
+.selectvenue-card:hover {
+  transform: scale(1.05);
+}
+
+.selectvenue-name {
+  font-size: 1.4rem;
+  color: #5b4636;
+  margin-bottom: 0.5rem;
+}
+
+.selectvenue-info {
+  margin: 0.3rem 0;
+  color: #333;
+}
+
+.selectvenue-button {
+  margin-top: 1rem;
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  background-color: #d88c5f;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.selectvenue-button:hover {
+  background-color: #b8704f;
+}

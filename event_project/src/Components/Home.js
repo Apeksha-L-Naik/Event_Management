@@ -12,20 +12,20 @@ const Home = () => {
   };
 
   return (
-  <div>
-  {/* Home section */}
-  <div className="full-screen-image">
-    <h1 className="headline">Welcome to EleganceOne</h1>
-    <button className="add-event-btn" onClick={handleAddEvent}>
-      Add Event
-    </button>
-  </div>
+  <div className="home">
+      {/* Top section with image */}
+      <div className="full-screen-image">
+        <h1 className="headline">Welcome to EleganceOne</h1>
+        <button className="add-event-btn" onClick={handleAddEvent}>
+          Add Event
+        </button>
+      </div>
 
-  {/* Dashboard section BELOW the image */}
-  <div className="dashboard-section">
-    <Dashboard />
-  </div>
-</div>
+      {/* Bottom section with user dashboard */}
+      <div className="userdash">
+        <Dashboard />
+      </div>
+    </div>
 
   );
 };

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
+import '../Styles/selectvenue.css';
 
 const VenueSelection = () => {
   const { eventId } = useParams();
@@ -28,20 +29,27 @@ const VenueSelection = () => {
   };
 
   return (
-    <div style={{ padding: '2rem' }}>
-      <h2>Select Venue for Event</h2>
-      {message && <p>{message}</p>}
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
-        {venues.map(venue => (
-          <div key={venue._id} style={{ border: '1px solid #ccc', padding: '1rem', width: '250px' }}>
-            <h3>{venue.name}</h3>
-            <p>Place: {venue.place}</p>
-            <p>Price: ₹{venue.price}</p>
-            <button onClick={() => selectVenue(venue._id)}>Select</button>
-          </div>
-        ))}
+    <div className="selectvenue-container">
+  <h2 className="selectvenue-heading">Select Venue for Event</h2>
+  {message && <p className="selectvenue-message">{message}</p>}
+
+  <div className="selectvenue-grid">
+    {venues.map(venue => (
+      <div key={venue._id} className="selectvenue-card">
+        <h3 className="selectvenue-name">{venue.name}</h3>
+        <p className="selectvenue-info">📍 Place: {venue.place}</p>
+        <p className="selectvenue-info">💰 Price: ₹{venue.price}</p>
+        <button
+          className="selectvenue-button"
+          onClick={() => selectVenue(venue._id)}
+        >
+          Select
+        </button>
       </div>
-    </div>
+    ))}
+  </div>
+</div>
+
   );
 };
 

@@ -26,7 +26,7 @@ const App = () => (
       <Route path="/admin/add-venue" element={<AddVenue />} />
       <Route path='/admin/add-decoration' element={<AddDecoration/>}/>
       <Route path='/admin/add-food' element={<AddFood/>}/>
-      <Route path="/add-venue/:eventId" element={<VenueSelection/>} /> 
+      <Route path="/add-venue/:eventId" element={<VenueSelection/>} />
     </Routes>
   </Router>
 );

@@ -7,22 +7,22 @@
 }
 
 body {
+  background-color: #f9f5f3;
   font-family: 'Roboto', sans-serif;
-  background-color: white;
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
+  height: 100vh;
+  margin: 0;
 }
 
-/* Container */
 .login-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
   padding: 20px;
 }
+
 
 .content-wrapper {
   display: flex;
