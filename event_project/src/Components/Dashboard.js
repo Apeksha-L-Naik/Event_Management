@@ -12,7 +12,10 @@ const Dashboard = () => {
     axios.get('http://localhost:5000/api/events/my-events', {
       headers: { Authorization: `Bearer ${token}` }
     })
-    .then(res => setEvents(res.data))
+    .then(res => {
+    console.log(res.data); // 👀 Check selectedVenue here
+    setEvents(res.data);
+  })
     .catch(err => {
       console.error(err);
       setMessage('Failed to load events');
@@ -46,16 +49,16 @@ const Dashboard = () => {
             <p>{event.description}</p>
 
             {/* Display assigned venue if exists */}
-            {event.venue ? (
-              <div style={{ marginTop: '1rem', padding: '0.75rem', border: '1px dashed #999', backgroundColor: '#f9f9f9' }}>
-                <h4>Selected Venue</h4>
-                <p><strong>Name:</strong> {event.venue.name}</p>
-                <p><strong>Place:</strong> {event.venue.place}</p>
-                <p><strong>Price:</strong> ₹{event.venue.price}</p>
-              </div>
-            ) : (
-              <p style={{ marginTop: '1rem', fontStyle: 'italic', color: '#666' }}>No venue selected yet.</p>
-            )}
+            {event.selectedVenue ? (
+  <div >
+    <h4>Selected Venue</h4>
+    <p><strong>Name:</strong> {event.selectedVenue.name}</p>
+    <p><strong>Place:</strong> {event.selectedVenue.place}</p>
+    <p><strong>Price:</strong> ₹{event.selectedVenue.price}</p>
+  </div>
+) : (
+  <p style={{ marginTop: '1rem', fontStyle: 'italic', color: '#666' }}>No venue selected yet.</p>
+)}
 
             <div style={{ marginTop: '1rem' }}>
               <button onClick={() => handleAddDecoration(event._id)}>Add Decoration</button>

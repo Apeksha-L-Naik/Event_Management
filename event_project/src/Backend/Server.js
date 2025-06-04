@@ -62,14 +62,16 @@ const userSchema = new mongoose.Schema({
 const User = mongoose.model('User', userSchema);
 //event scheme
 const eventSchema = new mongoose.Schema({
-  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-  name: { type: String, required: true },
-  date: { type: String, required: true },
-  time: { type: String, required: true },
-  description: { type: String, required: true },
-}, { timestamps: true });
+  name: String,
+  date: String,
+  time: String,
+  description: String,
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  selectedVenue: { type: mongoose.Schema.Types.ObjectId, ref: 'Venue' },
+});
 
 const Event = mongoose.model('Event', eventSchema);
+
 const venueSchema = new mongoose.Schema({
   name: { type: String, required: true },
   place: { type: String, required: true },
@@ -159,7 +161,7 @@ app.post('/api/events/create', verifyToken, async (req, res) => {
     }
 
     const newEvent = new Event({
-      user: req.user.id,
+      userId: req.user.id,
       name,
       date,
       time,
@@ -178,7 +180,7 @@ app.post('/api/events/create', verifyToken, async (req, res) => {
 // Get all events for logged-in user
 app.get('/api/events/my-events', verifyToken, async (req, res) => {
   try {
-    const events = await Event.find({ user: req.user.id }).sort({ createdAt: -1 });
+    const events = await Event.find({ userId: req.user.id }).populate('selectedVenue').sort({ createdAt: -1 });
     res.json(events);
   } catch (err) {
     console.error('Error fetching events:', err);
@@ -198,6 +200,19 @@ app.get('/api/events/my-events', verifyToken, async (req, res) => {
       res.status(500).json({ message: 'Server error' });
     }
   });
+
+//  app.get('/api/events/my-events', verifyToken, async (req, res) => {
+//   try {
+//     const events = await Event.find({ userId: req.user.id })
+//       .populate('selectedVenue')
+//       .populate('selectedDecoration')
+//       .populate('selectedFood');
+//     res.json(events);
+//   } catch (err) {
+//     res.status(500).json({ message: 'Failed to load events' });
+//   }
+// });
+
 
   app.post('/api/venues/create', verifyToken, async (req, res) => {
   try {
@@ -274,21 +289,29 @@ app.post('/api/events/:eventId/select-venue', verifyToken, async (req, res) => {
     const { eventId } = req.params;
     const { venueId } = req.body;
 
-    const event = await Event.findOne({ _id: eventId, user: req.user.id });
+    const event = await Event.findOne({ _id: eventId, userId: req.user.id });
     if (!event) return res.status(404).json({ message: 'Event not found' });
 
-    // Check venue exists
     const venue = await Venue.findById(venueId);
     if (!venue) return res.status(404).json({ message: 'Venue not found' });
 
-    // Assign venue to event (store venue info inside event or just venue id)
-    event.venue = venue; // embedding entire venue object for easy display
+    event.selectedVenue = venue._id; // or `venue` if you want to embed
     await event.save();
 
     res.json({ message: 'Venue selected for event', event });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Server error' });
+  }
+});
+
+
+app.get('/api/venues', async (req, res) => {
+  try {
+    const venues = await Venue.find();
+    res.json(venues);
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to load venues' });
   }
 });
 
@@ -435,6 +458,25 @@ app.delete('/api/foods/:id', verifyToken, async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 });
+
+// POST /api/food/add/:eventId
+app.post('/api/food/add/:eventId', verifyToken, async (req, res) => {
+  try {
+    const { name, type, price } = req.body;
+    const food = new Food({
+      eventId: req.params.eventId,
+      name,
+      type,
+      price
+    });
+    await food.save();
+    res.status(201).json({ message: 'Food added successfully' });
+  } catch (err) {
+    console.error('Error adding food:', err);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
   
 
 const PORT = process.env.PORT || 5000;
