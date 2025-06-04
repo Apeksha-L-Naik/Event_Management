@@ -8,6 +8,9 @@ import EventDetails from './Components/EventDetails';
 import AdminLogin from './Components/AdminLogin';
 import AdminDashboard from './Components/AdminDashboard';
 import AddVenue from './Components/AddVenue';
+import AddDecoration from './Components/AddDecoration';
+import AddFood from './Components/AddFood';
+import VenueSelection from './Components/VenueSelection';
 
 
 const App = () => (
@@ -21,6 +24,9 @@ const App = () => (
       <Route path="/event-info" element={<EventInfo/>} />
       <Route path="/events/:id" element={<EventDetails />} />
       <Route path="/admin/add-venue" element={<AddVenue />} />
+      <Route path='/admin/add-decoration' element={<AddDecoration/>}/>
+      <Route path='/admin/add-food' element={<AddFood/>}/>
+      <Route path="/add-venue/:eventId" element={<VenueSelection/>} /> 
     </Routes>
   </Router>
 );

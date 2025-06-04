@@ -1,87 +1,175 @@
-import React, { useState } from 'react';
-import '../Styles/addvenue.css'; 
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import '../Styles/addvenue.css';
 
 const AddVenue = () => {
+  const [formData, setFormData] = useState({ name: '', place: '', price: '' });
   const [venues, setVenues] = useState([]);
-  const [form, setForm] = useState({ name: '', place: '', photo: '' });
-  const [editingIndex, setEditingIndex] = useState(null);
+  const [message, setMessage] = useState('');
+  const [editingId, setEditingId] = useState(null);
 
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+  const token = localStorage.getItem('token');
+
+  useEffect(() => {
+    axios.get('http://localhost:5000/api/venues/my-venues', {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+    .then(res => setVenues(res.data))
+    .catch(err => console.error(err));
+  }, [token]);
+
+  const handleChange = e => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handlePhotoChange = (e) => {
-    const file = e.target.files[0];
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setForm({ ...form, photo: reader.result });
-    };
-    if (file) reader.readAsDataURL(file);
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     e.preventDefault();
-    if (!form.name || !form.place || !form.photo) return alert("All fields required");
-    
-    if (editingIndex !== null) {
-      const updated = [...venues];
-      updated[editingIndex] = form;
-      setVenues(updated);
-      setEditingIndex(null);
+
+    if (editingId) {
+      // Edit existing venue
+      axios.put(`http://localhost:5000/api/venues/${editingId}`, formData, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        }
+      })
+      .then(res => {
+        setMessage(res.data.message);
+        setVenues(prev =>
+          prev.map(venue => (venue._id === editingId ? res.data.venue : venue))
+        );
+        setFormData({ name: '', place: '', price: '' });
+        setEditingId(null);
+      })
+      .catch(err => {
+        console.error(err);
+        setMessage('Error updating venue');
+      });
     } else {
-      setVenues([...venues, form]);
+      // Create new venue
+      axios.post('http://localhost:5000/api/venues/create', formData, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        }
+      })
+      .then(res => {
+        setMessage(res.data.message);
+        setVenues(prev => [res.data.venue, ...prev]);
+        setFormData({ name: '', place: '', price: '' });
+      })
+      .catch(err => {
+        console.error(err);
+        setMessage('Error adding venue');
+      });
     }
-    setForm({ name: '', place: '', photo: '' });
   };
 
-  const handleEdit = (index) => {
-    setForm(venues[index]);
-    setEditingIndex(index);
+  const handleEdit = venue => {
+    setFormData({ name: venue.name, place: venue.place, price: venue.price });
+    setEditingId(venue._id);
+    setMessage('');
   };
 
-  const handleDelete = (index) => {
-    const updated = venues.filter((_, i) => i !== index);
-    setVenues(updated);
+  const handleDelete = id => {
+    if (!window.confirm('Are you sure you want to delete this venue?')) return;
+
+    axios.delete(`http://localhost:5000/api/venues/${id}`, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+    .then(res => {
+      setMessage(res.data.message);
+      setVenues(prev => prev.filter(venue => venue._id !== id));
+    })
+    .catch(err => {
+      console.error(err);
+      setMessage('Error deleting venue');
+    });
+  };
+
+  const handleCancelEdit = () => {
+    setFormData({ name: '', place: '', price: '' });
+    setEditingId(null);
+    setMessage('');
   };
 
   return (
    <div className="venue-container">
-  <h2 className="venue-title">{editingIndex !== null ? "Edit Venue" : "Add Venue"}</h2>
-  <form onSubmit={handleSubmit} className="venue-form">
-    <input type="text" name="name" placeholder="Venue Name" value={form.name} onChange={handleChange} required />
-    <input type="text" name="place" placeholder="Place" value={form.place} onChange={handleChange} required />
-    <input type="file" accept="image/*" onChange={handlePhotoChange} required={!form.photo} />
-    {form.photo && <img src={form.photo} alt="Preview" className="venue-preview" />}
-    <button type="submit" className="venue-button">
-      {editingIndex !== null ? "Update Venue" : "Add Venue"}
-    </button>
+  <h2 className="venue-title">{editingId ? 'Edit Venue' : 'Add Venue'}</h2>
+  <form className="venue-form" onSubmit={handleSubmit}>
+    <div className="venue-input-group">
+      <input
+        type="text"
+        name="name"
+        placeholder="Venue Name"
+        value={formData.name}
+        onChange={handleChange}
+        required
+        className="venue-input"
+      />
+    </div>
+    <div className="venue-input-group">
+      <input
+        type="text"
+        name="place"
+        placeholder="Place"
+        value={formData.place}
+        onChange={handleChange}
+        required
+        className="venue-input"
+      />
+    </div>
+    <div className="venue-input-group">
+      <input
+        type="number"
+        name="price"
+        placeholder="Price"
+        value={formData.price}
+        onChange={handleChange}
+        required
+        className="venue-input"
+      />
+    </div>
+    <div className="venue-button-group">
+      <button type="submit" className="venue-button">
+        {editingId ? 'Update Venue' : 'Add Venue'}
+      </button>
+      {editingId && (
+        <button
+          type="button"
+          onClick={handleCancelEdit}
+          className="venue-button venue-cancel-button"
+        >
+          Cancel
+        </button>
+      )}
+    </div>
   </form>
 
-  <h3 className="venue-subtitle">Venues</h3>
-  <div className="venue-grid">
-    {venues.map((venue, index) => (
-      <div key={index} className="venue-card">
-        <img src={venue.photo} alt={venue.name} className="venue-image" />
-        <h4>{venue.name}</h4>
-        <p>{venue.place}</p>
-        <button onClick={() => handleEdit(index)} className="venue-edit">Edit</button>
-        <button onClick={() => handleDelete(index)} className="venue-delete">Delete</button>
+  {message && <p className="venue-message">{message}</p>}
+
+  <h3 className="venue-subtitle">Your Venues</h3>
+  <div className="venue-card-container">
+    {venues.map((venue) => (
+      <div key={venue._id} className="venue-card">
+        <h4 className="venue-card-title">{venue.name}</h4>
+        <p className="venue-card-location">📍 {venue.place}</p>
+        <p className="venue-card-price">₹{venue.price}</p>
+        <div className="venue-card-actions">
+          <button onClick={() => handleEdit(venue)} className="venue-card-btn">
+            Edit
+          </button>
+          <button onClick={() => handleDelete(venue._id)} className="venue-card-btn delete">
+            Delete
+          </button>
+        </div>
       </div>
     ))}
   </div>
 </div>
 
   );
-};
-
-const styles = {
-  container: { padding: '2rem', maxWidth: 800, margin: 'auto' },
-  form: { display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '2rem' },
-  grid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '20px' },
-  card: { border: '1px solid #ccc', padding: 10, borderRadius: 8 },
-  image: { width: '100%', height: 100, objectFit: 'cover', borderRadius: 4 },
-  edit: { backgroundColor: '#1976d2', color: 'white', border: 'none', padding: '5px 10px', marginRight: 5 },
-  delete: { backgroundColor: 'red', color: 'white', border: 'none', padding: '5px 10px' }
 };
 
 export default AddVenue;
