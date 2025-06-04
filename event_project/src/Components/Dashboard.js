@@ -60,6 +60,28 @@ const Dashboard = () => {
   <p style={{ marginTop: '1rem', fontStyle: 'italic', color: '#666' }}>No venue selected yet.</p>
 )}
 
+{event.selectedFood ? (
+  <div >
+    <h4>Selected Food</h4>
+    <p><strong>Name:</strong> {event.selectedFood.companyName}</p>
+    <p><strong>Type:</strong> {event.selectedFood.foodType}</p>
+    <p><strong>Price:</strong> ₹{event.selectedFood.price}</p>
+  </div>
+) : (
+  <p style={{ marginTop: '1rem', fontStyle: 'italic', color: '#666' }}>No venue selected yet.</p>
+)}
+
+{event.selectedDecoration ? (
+  <div >
+    <h4>Selected Decoration</h4>
+    <p><strong>Name:</strong> {event.selectedDecoration.name}</p>
+    <p><strong>Type:</strong> {event.selectedDecoration.place}</p>
+    <p><strong>Price:</strong> ₹{event.selectedDecoration.price}</p>
+  </div>
+) : (
+  <p style={{ marginTop: '1rem', fontStyle: 'italic', color: '#666' }}>No venue selected yet.</p>
+)}
+
             <div style={{ marginTop: '1rem' }}>
               <button onClick={() => handleAddDecoration(event._id)}>Add Decoration</button>
               <button onClick={() => handleAddFood(event._id)} style={{ marginLeft: '1rem' }}>Add Food</button>

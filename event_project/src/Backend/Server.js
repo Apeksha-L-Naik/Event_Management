@@ -68,6 +68,8 @@ const eventSchema = new mongoose.Schema({
   description: String,
   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   selectedVenue: { type: mongoose.Schema.Types.ObjectId, ref: 'Venue' },
+  selectedFood: { type: mongoose.Schema.Types.ObjectId, ref: 'Food' },
+  selectedDecoration: { type: mongoose.Schema.Types.ObjectId, ref: 'Decoration' },
 });
 
 const Event = mongoose.model('Event', eventSchema);
@@ -180,7 +182,9 @@ app.post('/api/events/create', verifyToken, async (req, res) => {
 // Get all events for logged-in user
 app.get('/api/events/my-events', verifyToken, async (req, res) => {
   try {
-    const events = await Event.find({ userId: req.user.id }).populate('selectedVenue').sort({ createdAt: -1 });
+    const events = await Event.find({ userId: req.user.id }).populate('selectedVenue')
+    .populate('selectedFood')
+    .populate('selectedDecoration').sort({ createdAt: -1 });
     res.json(events);
   } catch (err) {
     console.error('Error fetching events:', err);
@@ -477,7 +481,66 @@ app.post('/api/food/add/:eventId', verifyToken, async (req, res) => {
   }
 });
 
-  
+app.post('/api/events/:eventId/select-food', verifyToken, async (req, res) => {
+  try {
+    const { eventId } = req.params;
+    const { foodId } = req.body;
+
+    const event = await Event.findOne({ _id: eventId, userId: req.user.id });
+    if (!event) return res.status(404).json({ message: 'Event not found' });
+
+    const food = await Food.findById(foodId);
+    if (!food) return res.status(404).json({ message: 'food not found' });
+
+    event.selectedFood = food._id; // or `venue` if you want to embed
+    await event.save();
+
+    res.json({ message: 'Food selected for event', event });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+app.get('/api/foods', async (req, res) => {
+  try {
+    const foods = await Food.find();
+    res.json(foods);
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to load foods' });
+  }
+});
+
+
+app.post('/api/events/:eventId/select-decoration', verifyToken, async (req, res) => {
+  try {
+    const { eventId } = req.params;
+    const { decorationId } = req.body;
+
+    const event = await Event.findOne({ _id: eventId, userId: req.user.id });
+    if (!event) return res.status(404).json({ message: 'Event not found' });
+
+    const decoration = await Decoration.findById(decorationId);
+    if (!decoration) return res.status(404).json({ message: 'Decoration not found' });
+
+    event.selectedDecoration = decoration._id; // or `venue` if you want to embed
+    await event.save();
+
+    res.json({ message: 'Decoration selected for event', event });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+app.get('/api/decorations', async (req, res) => {
+  try {
+    const decorations = await Decoration.find();
+    res.json(decorations);
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to load foods' });
+  }
+});
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

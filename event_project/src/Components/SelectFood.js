@@ -1,46 +1,46 @@
-import React, { useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useParams, useNavigate } from 'react-router-dom';
 
-const selectedFood = () => {
+const SelectFood= () => {
   const { eventId } = useParams();
   const navigate = useNavigate();
-  const [food, setFood] = useState({
-    name: '',
-    type: '',
-    price: ''
-  });
+  const [foods, setFoods] = useState([]);
   const [message, setMessage] = useState('');
   const token = localStorage.getItem('token');
 
-  const handleChange = (e) => {
-    setFood({ ...food, [e.target.name]: e.target.value });
-  };
+  useEffect(() => {
+    axios.get('http://localhost:5000/api/foods')
+      .then(res => setFoods(res.data))
+      .catch(() => setMessage('Failed to load venues'));
+  }, []);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      await axios.post(`http://localhost:5000/api/food/add/${eventId}`, food, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      setMessage('Food added successfully!');
-      setTimeout(() => navigate('/home'), 1000); // redirect back after success
-    } catch (err) {
-      console.error(err);
-      setMessage('Failed to add food');
-    }
+  const selectFood = (foodId) => {
+    axios.post(`http://localhost:5000/api/events/${eventId}/select-food`,
+      { foodId },
+      { headers: { Authorization: `Bearer ${token}` } }
+    )
+    .then(() => {
+      alert('food selected!');
+      navigate('/dashboard');  // Back to dashboard
+    })
+    .catch(() => alert('Failed to select food'));
   };
 
   return (
     <div style={{ padding: '2rem' }}>
-      <h2>Add Food to Event</h2>
+      <h2>Select food for Event</h2>
       {message && <p>{message}</p>}
-      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem', maxWidth: '400px' }}>
-        <input type="text" name="name" placeholder="Food Name" value={food.name} onChange={handleChange} required />
-        <input type="text" name="type" placeholder="Type (veg/non-veg)" value={food.type} onChange={handleChange} required />
-        <input type="number" name="price" placeholder="Price" value={food.price} onChange={handleChange} required />
-        <button type="submit">Add Food</button>
-      </form>
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
+        {foods.map(food => (
+          <div key={food._id} style={{ border: '1px solid #ccc', padding: '1rem', width: '250px' }}>
+            <h3>{food.companyName}</h3>
+            <p>Type: {food.foodType}</p>
+            <p>Price: ₹{food.price}</p>
+            <button onClick={() => selectFood(food._id)}>Select</button>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

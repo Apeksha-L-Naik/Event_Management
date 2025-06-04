@@ -11,6 +11,8 @@ import AddVenue from './Components/AddVenue';
 import AddDecoration from './Components/AddDecoration';
 import AddFood from './Components/AddFood';
 import VenueSelection from './Components/VenueSelection';
+import SelectFood from './Components/SelectFood';
+import SelectDecoration from './Components/SelectDecoration';
 
 
 const App = () => (
@@ -27,7 +29,8 @@ const App = () => (
       <Route path='/admin/add-decoration' element={<AddDecoration/>}/>
       <Route path='/admin/add-food' element={<AddFood/>}/>
       <Route path="/add-venue/:eventId" element={<VenueSelection/>} />
-      <Route path="/add-food/:eventId" element={<AddFood />} />
+      <Route path="/add-food/:eventId" element={<SelectFood/>} />
+      <Route path="/add-decoration/:eventId" element={<SelectDecoration/>} />
     </Routes>
   </Router>
 );
