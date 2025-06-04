@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';  // <-- import useNavigate
 import '../Styles/register.css';
 
-
 const Register = () => {
-  const [form, setForm] = useState({ name: '', email: '', password: '' });
+  const [form, setForm] = useState({ name: '', email: '', password: '', role: 'user' });
   const [message, setMessage] = useState('');
+  const navigate = useNavigate(); // for navigation after registration
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -17,7 +17,14 @@ const Register = () => {
     try {
       const res = await axios.post('http://localhost:5000/api/auth/register', form);
       setMessage(res.data.message);
-      setForm({ name: '', email: '', password: '' }); // clear form
+      setForm({ name: '', email: '', password: '', role: 'user' }); // reset form
+
+      // Redirect based on role
+      if (form.role === 'admin') {
+        navigate('/admin-login');
+      } else {
+        navigate('/login');
+      }
     } catch (error) {
       setMessage(error.response?.data?.message || 'Error registering');
     }
@@ -51,6 +58,13 @@ const Register = () => {
           onChange={handleChange}
           required
         />
+
+        {/* Role selection dropdown */}
+        <select name="role" value={form.role} onChange={handleChange} required>
+          <option value="user">User</option>
+          <option value="admin">Admin</option>
+        </select>
+
         <button type="submit">Sign Up</button>
         {message && <p className="form-message">{message}</p>}
         <p className="login-link">
@@ -62,4 +76,3 @@ const Register = () => {
 };
 
 export default Register;
-

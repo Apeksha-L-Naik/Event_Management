@@ -1,49 +1,65 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { useNavigate, Link } from 'react-router-dom';
+import '../Styles/login.css';  // your styles if any
 
 const AdminLogin = () => {
   const [form, setForm] = useState({ email: '', password: '' });
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
 
-  const handleChange = e => setForm({ ...form, [e.target.name]: e.target.value });
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
 
-  const handleSubmit = e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setMessage('');
+    try {
+      const res = await axios.post('http://localhost:5000/api/auth/login', form);
 
-    // Hardcoded admin credentials
-    const adminEmail = 'admin@example.com';
-    const adminPassword = 'admin123';
+      // Check if logged-in user is admin
+      if (res.data.user && res.data.user.role === 'admin') {
+        // Save token (e.g. in localStorage)
+        localStorage.setItem('token', res.data.token);
+        localStorage.setItem('user', JSON.stringify(res.data.user));
 
-    if (form.email === adminEmail && form.password === adminPassword) {
-      setMessage('Admin login successful!');
-      navigate('/admin-dashboard');
-    } else {
-      setMessage('Invalid admin credentials');
+        // Redirect to admin dashboard (change route as needed)
+        navigate('/admin-dashboard');
+      } else {
+        setMessage('You are not authorized as admin');
+      }
+    } catch (error) {
+      setMessage(error.response?.data?.message || 'Login failed');
     }
   };
 
   return (
-    <div>
-      <h2>Admin Login</h2>
-      <form onSubmit={handleSubmit}>
+    <div className="login-container">
+      <form className="login-form" onSubmit={handleSubmit}>
+        <h2>Admin Login</h2>
         <input
           type="email"
           name="email"
-          placeholder="Admin Email"
+          placeholder="Email Address"
+          value={form.email}
           onChange={handleChange}
           required
         />
         <input
           type="password"
           name="password"
-          placeholder="Admin Password"
+          placeholder="Enter Password"
+          value={form.password}
           onChange={handleChange}
           required
         />
         <button type="submit">Login</button>
+        {message && <p className="form-message">{message}</p>}
+        <p>
+          Not an admin? <Link to="/login">User Login</Link>
+        </p>
       </form>
-      <p>{message}</p>
     </div>
   );
 };
