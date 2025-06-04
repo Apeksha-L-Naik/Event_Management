@@ -1,0 +1,90 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;500&display=swap');
+
+/* Reset and font setup */
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Roboto', sans-serif;
+  background-color: #fffaf7;
+}
+
+/* Fullscreen white card */
+.event-fullscreen-card {
+  width: 100vw;
+  height: 100vh;
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+}
+
+/* Content inside the card */
+.event-content-wrapper {
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+}
+
+/* Title */
+.event-name-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 42px;
+  color: #c97145;
+  margin-bottom: 300px;
+}
+
+/* Subtitle */
+.event-description-text {
+  font-size: 18px;
+  margin-bottom: 35px;
+  color: #444;
+}
+
+/* Date and Time lines */
+.event-date-line,
+.event-time-line {
+  font-size: 17px;
+  margin: 6px 0;
+  color: #333;
+}
+
+/* Bold label */
+.event-label {
+  font-weight: bold;
+}
+
+/* Button container */
+.event-button-group {
+  margin-top: 30px;
+}
+
+/* Button style */
+.event-action-button {
+  display: block;
+  width: 100%;
+  margin: 10px 0;
+  padding: 14px;
+  background-color: #d48352;
+  color: white;
+  font-size: 16px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.event-action-button:hover {
+  background-color: #b9693e;
+}
+
+/* Loading fallback */
+.event-loading-text {
+  font-size: 18px;
+  color: #444;
+  text-align: center;
+  margin-top: 50px;
+}

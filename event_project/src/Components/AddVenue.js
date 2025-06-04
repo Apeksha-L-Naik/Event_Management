@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import '../Styles/addvenue.css'; 
 
 const AddVenue = () => {
   const [venues, setVenues] = useState([]);
@@ -44,29 +45,32 @@ const AddVenue = () => {
   };
 
   return (
-    <div style={styles.container}>
-      <h2>{editingIndex !== null ? "Edit Venue" : "Add Venue"}</h2>
-      <form onSubmit={handleSubmit} style={styles.form}>
-        <input type="text" name="name" placeholder="Venue Name" value={form.name} onChange={handleChange} required />
-        <input type="text" name="place" placeholder="Place" value={form.place} onChange={handleChange} required />
-        <input type="file" accept="image/*" onChange={handlePhotoChange} required={!form.photo} />
-        {form.photo && <img src={form.photo} alt="Preview" style={{ width: 150, height: 100, objectFit: 'cover' }} />}
-        <button type="submit">{editingIndex !== null ? "Update Venue" : "Add Venue"}</button>
-      </form>
+   <div className="venue-container">
+  <h2 className="venue-title">{editingIndex !== null ? "Edit Venue" : "Add Venue"}</h2>
+  <form onSubmit={handleSubmit} className="venue-form">
+    <input type="text" name="name" placeholder="Venue Name" value={form.name} onChange={handleChange} required />
+    <input type="text" name="place" placeholder="Place" value={form.place} onChange={handleChange} required />
+    <input type="file" accept="image/*" onChange={handlePhotoChange} required={!form.photo} />
+    {form.photo && <img src={form.photo} alt="Preview" className="venue-preview" />}
+    <button type="submit" className="venue-button">
+      {editingIndex !== null ? "Update Venue" : "Add Venue"}
+    </button>
+  </form>
 
-      <h3>Venues</h3>
-      <div style={styles.grid}>
-        {venues.map((venue, index) => (
-          <div key={index} style={styles.card}>
-            <img src={venue.photo} alt={venue.name} style={styles.image} />
-            <h4>{venue.name}</h4>
-            <p>{venue.place}</p>
-            <button onClick={() => handleEdit(index)} style={styles.edit}>Edit</button>
-            <button onClick={() => handleDelete(index)} style={styles.delete}>Delete</button>
-          </div>
-        ))}
+  <h3 className="venue-subtitle">Venues</h3>
+  <div className="venue-grid">
+    {venues.map((venue, index) => (
+      <div key={index} className="venue-card">
+        <img src={venue.photo} alt={venue.name} className="venue-image" />
+        <h4>{venue.name}</h4>
+        <p>{venue.place}</p>
+        <button onClick={() => handleEdit(index)} className="venue-edit">Edit</button>
+        <button onClick={() => handleDelete(index)} className="venue-delete">Delete</button>
       </div>
-    </div>
+    ))}
+  </div>
+</div>
+
   );
 };
 

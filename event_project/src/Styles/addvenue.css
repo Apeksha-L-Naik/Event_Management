@@ -1,0 +1,117 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* prevent horizontal scroll if any */
+}
+
+
+
+.venue-container {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(15px);
+  padding: 30px;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 700px;
+  margin: 40px auto;
+  
+  color: #5b4636;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.venue-title,
+.venue-subtitle {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #5b4636;
+}
+
+.venue-form input[type="text"],
+.venue-form input[type="file"] {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  border-radius: 10px;
+  border: none;
+  background: rgba(255, 255, 255, 0.15);
+  color: #5b4636;
+  font-size: 1rem;
+}
+
+.venue-form input::placeholder {
+  color: #5b4636;
+}
+
+.venue-preview {
+  display: block;
+  margin: 10px auto;
+  width: 150px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.venue-button {
+  width: 100%;
+  padding: 12px;
+  background: #d88c5f;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 10px;
+  transition: background 0.3s ease;
+}
+
+.venue-button:hover {
+  background: #b8704f;
+}
+
+.venue-grid {
+  display: grid;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.venue-card {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 15px;
+  padding: 15px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.venue-image {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.venue-edit,
+.venue-delete {
+  padding: 8px 16px;
+  margin: 8px 5px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: transform 0.2s;
+}
+
+.venue-edit {
+  background-color: #3498db;
+  color: white;
+}
+
+.venue-delete {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.venue-edit:hover,
+.venue-delete:hover {
+  transform: scale(1.05);
+}

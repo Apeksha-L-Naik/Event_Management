@@ -15,56 +15,43 @@ body {
   flex-direction: column;
 }
 
-/* Container */
-.register-container {
+/* Admin Container */
+.admin-content-wrapper {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  padding: 20px;
-}
-
-.content-wrapper {
-  display: flex;
-  width: 900px;              /* 👈 increase width */
-  height: 550px;             /* 👈 increase height */
+  width: 900px;
+  height: 550px;
   border-radius: 10px;
   overflow: hidden;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-
-/* Registration Section */
-.register-section {
+.admin-login-section {
   background-color: #fff;
   width: 450px;
   height: 100%;
-  display: flex;                     /* New */
-  flex-direction: column;           /* New */
-  justify-content: center;          /* New: center content vertically */
-  padding: 0 40px;                  /* Adjust horizontal padding only */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 40px;
   border-radius: 10px 0 0 10px;
 }
 
-
-.register-title {
+.admin-login-title {
   font-family: 'Playfair Display', serif;
   font-size: 1.8rem;
   text-align: center;
   color: #5b4636;
   margin-bottom: 60px;
-  margin-top: 0;                    /* 👈 Add this if needed */
 }
 
-
-.register-form label {
+.admin-login-form label {
   display: block;
   margin-bottom: 5px;
   color: #5b4636;
   font-weight: 500;
 }
 
-.register-form input {
+.admin-login-form input {
   width: 100%;
   padding: 12px;
   margin-bottom: 20px;
@@ -74,7 +61,7 @@ body {
   font-family: 'Roboto', sans-serif;
 }
 
-.register-button {
+.admin-login-button {
   width: 100%;
   padding: 12px;
   background-color: #d88c5f;
@@ -86,42 +73,24 @@ body {
   cursor: pointer;
 }
 
-.register-button:hover {
+.admin-login-button:hover {
   background-color: #b8704f;
 }
 
-.register-links {
-  margin-top: 20px;
-  display: flex;
-  justify-content: space-between;
-  font-size: 14px;
-  color: #d88c5f;
-}
-
-.register-links a {
-  color: #d88c5f;
-  text-decoration: none;
-}
-
-.register-links a:hover {
-  text-decoration: underline;
-}
-
-.message {
+.admin-message {
   margin-top: 10px;
   color: green;
   font-size: 14px;
 }
 
-/* Remove .info-section and related styles */
-
-.image-section {
-  width: 480px;              /* 👈 same as register-section for balance */
+/* Admin Image Section */
+.admin-image-section {
+  width: 480px;
   height: 100%;
   overflow: hidden;
 }
 
-.register-image {
+.admin-login-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
