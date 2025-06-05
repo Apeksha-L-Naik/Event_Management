@@ -1,3 +1,6 @@
+
+import '../Styles/eventinfo.css'; // CSS file you'll create
+
 import React, { useState } from 'react';
 import axios from 'axios';
 
@@ -60,67 +63,47 @@ const EventInfo = () => {
   };
 
   return (
-    <div style={{ maxWidth: '400px', margin: '2rem auto', padding: '1rem', border: '1px solid #ddd', borderRadius: '8px' }}>
-      <h2>Create Event</h2>
+        <div className="event-background">
+      <div className="event-form-container">
+        <form onSubmit={handleSubmit} className="event-form">
+          <h2>🗓️ Add Event Details</h2>
 
-      {message && <p style={{ color: 'green' }}>{message}</p>}
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+          <input
+            type="text"
+            name="name"
+            placeholder="Event Name"
+            value={formData.name}
+            onChange={handleChange}
+            required
+          />
 
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="name"
-          placeholder="Event Name"
-          value={formData.name}
-          onChange={handleChange}
-          required
-          style={{ width: '100%', marginBottom: '10px', padding: '8px' }}
-        />
+          <input
+            type="date"
+            name="date"
+            value={formData.date}
+            onChange={handleChange}
+            required
+          />
 
-        <input
-          type="date"
-          name="date"
-          value={formData.date}
-          onChange={handleChange}
-          required
-          style={{ width: '100%', marginBottom: '10px', padding: '8px' }}
-        />
+          <input
+            type="time"
+            name="time"
+            value={formData.time}
+            onChange={handleChange}
+            required
+          />
 
-        <input
-          type="time"
-          name="time"
-          value={formData.time}
-          onChange={handleChange}
-          required
-          style={{ width: '100%', marginBottom: '10px', padding: '8px' }}
-        />
+          <textarea
+            name="description"
+            placeholder="Event Description"
+            value={formData.description}
+            onChange={handleChange}
+            required
+          />
 
-        <textarea
-          name="description"
-          placeholder="Event Description"
-          value={formData.description}
-          onChange={handleChange}
-          required
-          rows="4"
-          style={{ width: '100%', marginBottom: '10px', padding: '8px' }}
-        />
-
-        <button
-          type="submit"
-          style={{
-            width: '100%',
-            padding: '10px',
-            backgroundColor: '#007bff',
-            color: 'white',
-            border: 'none',
-            borderRadius: '4px',
-            cursor: 'pointer',
-            fontSize: '16px'
-          }}
-        >
-          Submit
-        </button>
-      </form>
+          <button type="submit">Submit</button>
+        </form>
+      </div>
     </div>
   );
 };

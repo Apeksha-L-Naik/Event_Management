@@ -1,0 +1,113 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Roboto:wght@400;500&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+ background-color: #f9f5f3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+/* Container */
+.admin-content-wrapper {
+   background-color: #f9f5f3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 900px;
+  height: 550px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Image Section */
+.admin-image-section {
+  width: 480px;
+  height: 100%;
+  overflow: hidden;
+}
+
+.admin-login-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Form Section */
+.admin-login-section {
+  background-color: #fff;
+  width: 450px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 40px;
+  border-radius: 10px 0 0 10px;
+}
+
+.admin-login-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  text-align: center;
+  color: #5b4636;
+  margin-bottom: 60px;
+  margin-top: 0;
+}
+
+.admin-login-form input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 14px;
+  font-family: 'Roboto', sans-serif;
+}
+
+.admin-login-button {
+  width: 100%;
+  padding: 12px;
+  background-color: #d88c5f;
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.admin-login-button:hover {
+  background-color: #b8704f;
+}
+
+.admin-message {
+  margin-top: 10px;
+  color: green;
+  font-size: 14px;
+}
+
+.admin-login-link {
+  margin-top: 15px;
+  text-align: center;
+  font-size: 14px;
+  color: #5b4636;
+}
+
+.admin-login-link a {
+  color: #d88c5f;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.admin-login-link a:hover {
+  text-decoration: underline;
+}

@@ -23,35 +23,52 @@ const Login = () => {
   };
 
   return (
-    <div className="login-container">
-      <form className="login-form" onSubmit={handleSubmit}>
-        <h2>Login</h2>
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={form.email}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={form.password}
-          onChange={handleChange}
-          required
-        />
-        <button type="submit">Login</button>
-        {message && <p className="message">{message}</p>}
-        <p className="link-text">
-          Don’t have an account? <Link to="/">Register</Link>
-        </p>
-      </form>
-      <p>{message}</p>
-      <p>Don’t have an account? <Link to="/">Register</Link></p>
-      <p><Link to="/admin-login">Admin?</Link></p>
+   <div className="content-wrapper">
+  {/* Image Section FIRST (left side) */}
+  <div className="image-section">
+    <img
+      src="https://i.pinimg.com/736x/48/5a/85/485a8572612a186868443fc6df362279.jpg"
+      alt="Login Illustration"
+      className="login-image"
+    />
+  </div>
+
+  {/* Login Section SECOND (right side) */}
+  <div className="login-section">
+    <h2 className="login-title">Login to Continue</h2>
+    <form className="login-form" onSubmit={handleSubmit}>
+      <label>Email</label>
+      <input
+        name="email"
+        type="email"
+        placeholder="Enter your email"
+        value={form.email}
+        onChange={handleChange}
+        required
+      />
+      <label>Password</label>
+      <input
+        name="password"
+        type="password"
+        placeholder="Enter your password"
+        value={form.password}
+        onChange={handleChange}
+        required
+      />
+      <button type="submit" className="login-button">Login</button>
+    </form>
+    {message && <p className="message">{message}</p>}
+    <div className="login-links">
+      <span>
+        Don’t have an account? <Link to="/">Register</Link>
+      </span>
+      <span>
+        <Link to="/admin-login">Admin?</Link>
+      </span>
     </div>
+  </div>
+</div>
+
   );
 };
 

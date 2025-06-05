@@ -1,0 +1,57 @@
+/* Admin Dashboard Container */
+.admin-container {
+  height: 100vh;
+  width: 100vw;
+  background-image: url('https://i.pinimg.com/736x/e4/9b/e8/e49be8ce9e0e2ee44f86bb464c61def0.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; /* center vertically */
+  padding: 60px 20px;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+
+/* Dashboard Title */
+.admin-title {
+  font-size: 36px;
+  font-weight: 800;
+  color: #5b4636;
+  margin-bottom: 40px;
+  text-shadow: 1px 1px 4px rgba(98, 77, 77, 0.05);
+}
+
+/* Button Group */
+.admin-button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  max-width: 400px;
+}
+
+/* Styled Link Buttons */
+.admin-link-button {
+  display: block;
+  background:  #d88c5f;
+  color: white;
+  padding: 14px 24px;
+  border-radius: 10px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.2);
+  transition: all 0.3s ease;
+}
+
+.admin-link-button:hover {
+  background: #b8704f;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(30, 64, 175, 0.3);
+}

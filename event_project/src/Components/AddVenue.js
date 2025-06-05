@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import '../Styles/addvenue.css';
 
 const AddVenue = () => {
   const [formData, setFormData] = useState({ name: '', place: '', price: '' });
@@ -94,74 +95,80 @@ const AddVenue = () => {
   };
 
   return (
-    <div style={{ padding: '2rem' }}>
-      <h2>{editingId ? 'Edit Venue' : 'Add Venue'}</h2>
-      <form onSubmit={handleSubmit} style={{ marginBottom: '2rem' }}>
-        <div>
-          <input
-            type="text"
-            name="name"
-            placeholder="Venue Name"
-            value={formData.name}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <input
-            type="text"
-            name="place"
-            placeholder="Place"
-            value={formData.place}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <input
-            type="number"
-            name="price"
-            placeholder="Price"
-            value={formData.price}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <button type="submit">{editingId ? 'Update Venue' : 'Add Venue'}</button>
-        {editingId && (
-          <button type="button" onClick={handleCancelEdit} style={{ marginLeft: '1rem' }}>
-            Cancel
-          </button>
-        )}
-      </form>
-
-      {message && <p>{message}</p>}
-
-      <h3>Your Venues</h3>
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
-        {venues.map(venue => (
-          <div
-            key={venue._id}
-            style={{
-              border: '1px solid #ccc',
-              padding: '1rem',
-              width: '200px',
-              position: 'relative'
-            }}
-          >
-            <h4>{venue.name}</h4>
-            <p>📍 {venue.place}</p>
-            <p>₹{venue.price}</p>
-            <div style={{ position: 'absolute', top: '10px', right: '10px' }}>
-              <button onClick={() => handleEdit(venue)} style={{ marginRight: '0.5rem' }}>
-                Edit
-              </button>
-              <button onClick={() => handleDelete(venue._id)}>Delete</button>
-            </div>
-          </div>
-        ))}
-      </div>
+   <div className="venue-container">
+  <h2 className="venue-title">{editingId ? 'Edit Venue' : 'Add Venue'}</h2>
+  <form className="venue-form" onSubmit={handleSubmit}>
+    <div className="venue-input-group">
+      <input
+        type="text"
+        name="name"
+        placeholder="Venue Name"
+        value={formData.name}
+        onChange={handleChange}
+        required
+        className="venue-input"
+      />
     </div>
+    <div className="venue-input-group">
+      <input
+        type="text"
+        name="place"
+        placeholder="Place"
+        value={formData.place}
+        onChange={handleChange}
+        required
+        className="venue-input"
+      />
+    </div>
+    <div className="venue-input-group">
+      <input
+        type="number"
+        name="price"
+        placeholder="Price"
+        value={formData.price}
+        onChange={handleChange}
+        required
+        className="venue-input"
+      />
+    </div>
+    <div className="venue-button-group">
+      <button type="submit" className="venue-button">
+        {editingId ? 'Update Venue' : 'Add Venue'}
+      </button>
+      {editingId && (
+        <button
+          type="button"
+          onClick={handleCancelEdit}
+          className="venue-button venue-cancel-button"
+        >
+          Cancel
+        </button>
+      )}
+    </div>
+  </form>
+
+  {message && <p className="venue-message">{message}</p>}
+
+  <h3 className="venue-subtitle">Your Venues</h3>
+  <div className="venue-card-container">
+    {venues.map((venue) => (
+      <div key={venue._id} className="venue-card">
+        <h4 className="venue-card-title">{venue.name}</h4>
+        <p className="venue-card-location">📍 {venue.place}</p>
+        <p className="venue-card-price">₹{venue.price}</p>
+        <div className="venue-card-actions">
+          <button onClick={() => handleEdit(venue)} className="venue-card-btn">
+            Edit
+          </button>
+          <button onClick={() => handleDelete(venue._id)} className="venue-card-btn delete">
+            Delete
+          </button>
+        </div>
+      </div>
+    ))}
+  </div>
+</div>
+
   );
 };
 

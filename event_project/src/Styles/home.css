@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Roboto:wght@400;500&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif;
+  scroll-behavior: smooth;
+  background-color: #f8f8f8;
+}
+
+/* Home section */
+.home .full-screen-image {
+  width: 100vw;
+  height: 100vh;
+  background-image: url('../Images/homeimg.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  position: relative;
+}
+
+.home .headline {
+  color: black;
+  font-size: 3rem;
+  font-family: 'Playfair Display', serif;
+  text-shadow: 2px 2px 6px rgba(255, 255, 255, 0.8);
+  margin-bottom: 600px;
+}
+
+.home .add-event-btn {
+  padding: 12px 28px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  background-color: #d88c5f;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.home .add-event-btn:hover {
+  background-color: #b8704f;
+}
+
+/* Dashboard below */
+.userdash {
+  padding: 3rem 2rem;
+  background-color: #fff;
+}

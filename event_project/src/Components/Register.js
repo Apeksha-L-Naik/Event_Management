@@ -32,45 +32,75 @@ const Register = () => {
 
   return (
     <div className="register-container">
-      <form className="register-form" onSubmit={handleSubmit}>
-        <h2>Register for Events</h2>
-        <input
-          type="text"
-          name="name"
-          placeholder="Full Name"
-          value={form.name}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="email"
-          name="email"
-          placeholder="Email Address"
-          value={form.email}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Create Password"
-          value={form.password}
-          onChange={handleChange}
-          required
-        />
+      <div className="content-wrapper">
+        {/* Image Section */}
+        <div className="image-section">
+          <img
+            src="https://i.pinimg.com/736x/48/5a/85/485a8572612a186868443fc6df362279.jpg"
+            alt="Registration Illustration"
+            className="register-image"
+          />
+        </div>
 
-        {/* Role selection dropdown */}
-        <select name="role" value={form.role} onChange={handleChange} required>
-          <option value="user">User</option>
-          <option value="admin">Admin</option>
-        </select>
+        {/* Form Section */}
+        <div className="register-section">
+          <h2 className="register-title">Register to Continue</h2>
+          <form className="register-form" onSubmit={handleSubmit}>
+            <label>Full Name</label>
+            <input
+              type="text"
+              name="name"
+              placeholder="Enter your name"
+              value={form.name}
+              onChange={handleChange}
+              required
+            />
 
-        <button type="submit">Sign Up</button>
-        {message && <p className="form-message">{message}</p>}
-        <p className="login-link">
-          Already have an account? <Link to="/login">Login here</Link>
-        </p>
-      </form>
+            <label>Email</label>
+            <input
+              type="email"
+              name="email"
+              placeholder="Enter your email"
+              value={form.email}
+              onChange={handleChange}
+              required
+            />
+
+            <label>Password</label>
+            <input
+              type="password"
+              name="password"
+              placeholder="Enter your password"
+              value={form.password}
+              onChange={handleChange}
+              required
+            />
+
+        <label htmlFor="role">Role</label>
+<select
+  id="role"
+  name="role"
+  value={form.role}
+  onChange={handleChange}
+  required
+>
+  <option value="user">User</option>
+  <option value="admin">Admin</option>
+</select>
+
+
+            <button type="submit" className="register-button">Register</button>
+          </form>
+
+          {message && <p className="message">{message}</p>}
+
+          <div className="register-links">
+            <span>
+              Already have an account? <Link to="/login">Login</Link>
+            </span>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

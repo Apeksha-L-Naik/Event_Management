@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
-import '../Styles/login.css';  // your styles if any
+import '../Styles/adminlogin.css';  // your styles if any
 
 const AdminLogin = () => {
   const [form, setForm] = useState({ email: '', password: '' });
@@ -35,32 +35,45 @@ const AdminLogin = () => {
   };
 
   return (
-    <div className="login-container">
-      <form className="login-form" onSubmit={handleSubmit}>
-        <h2>Admin Login</h2>
-        <input
-          type="email"
-          name="email"
-          placeholder="Email Address"
-          value={form.email}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Enter Password"
-          value={form.password}
-          onChange={handleChange}
-          required
-        />
-        <button type="submit">Login</button>
-        {message && <p className="form-message">{message}</p>}
-        <p>
-          Not an admin? <Link to="/login">User Login</Link>
-        </p>
-      </form>
-    </div>
+    <div className="admin-content-wrapper">
+  {/* Image Section (Left Side) */}
+  <div className="admin-image-section">
+    <img
+      src="https://i.pinimg.com/736x/48/5a/85/485a8572612a186868443fc6df362279.jpg"
+      alt="Admin Illustration"
+      className="admin-login-image"
+    />
+  </div>
+
+  {/* Login Form Section (Right Side) */}
+  <div className="admin-login-section">
+    <h2 className="admin-login-title">Admin Login</h2>
+    <form className="admin-login-form" onSubmit={handleSubmit}>
+      <input
+        type="email"
+        name="email"
+        placeholder="Email Address"
+        value={form.email}
+        onChange={handleChange}
+        required
+      />
+      <input
+        type="password"
+        name="password"
+        placeholder="Enter Password"
+        value={form.password}
+        onChange={handleChange}
+        required
+      />
+      <button type="submit" className="admin-login-button">Login</button>
+      {message && <p className="admin-message">{message}</p>}
+      <p className="admin-login-link">
+        Not an admin? <Link to="/login">User Login</Link>
+      </p>
+    </form>
+  </div>
+</div>
+
   );
 };
 

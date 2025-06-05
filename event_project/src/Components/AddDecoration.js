@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import '../Styles/adddecoration.css';
 
 const AddDecoration = () => {
   const [formData, setFormData] = useState({ name: '', place: '', price: '' });
@@ -89,62 +90,85 @@ const AddDecoration = () => {
   };
 
   return (
-    <div style={{ padding: '2rem' }}>
-      <h2>{editingId ? 'Edit Decoration' : 'Add Decoration (Company Name, Place, Price)'}</h2>
-      <form onSubmit={handleSubmit} style={{ marginBottom: '2rem' }}>
-        <div>
-          <input
-            type="text"
-            name="name"
-            placeholder="Company Name"
-            value={formData.name}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <input
-            type="text"
-            name="place"
-            placeholder="Place"
-            value={formData.place}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <input
-            type="number"
-            name="price"
-            placeholder="Price"
-            value={formData.price}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <button type="submit">{editingId ? 'Update Decoration' : 'Add Decoration'}</button>
-        {editingId && (
-          <button type="button" onClick={() => { setEditingId(null); setFormData({ name: '', place: '', price: '' }); setMessage(''); }} style={{ marginLeft: '1rem' }}>
-            Cancel
-          </button>
-        )}
-      </form>
+    <div className="decor-container">
+  <h2 className="decor-title">
+    {editingId ? 'Edit Decoration' : 'Add Decoration (Company Name, Place, Price)'}
+  </h2>
 
-      {message && <p>{message}</p>}
-
-      <h3>Your Decorations</h3>
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
-        {decorations.map(dec => (
-          <div key={dec._id} style={{ border: '1px solid #ccc', padding: '1rem', width: '250px' }}>
-            <h4>{dec.name}</h4>
-            <p>📍 {dec.place}</p>
-            <p>💰 ₹{dec.price}</p>
-            <button onClick={() => handleEdit(dec)}>Edit</button>
-            <button onClick={() => handleDelete(dec._id)} style={{ marginLeft: '0.5rem' }}>Delete</button>
-          </div>
-        ))}
-      </div>
+  <form onSubmit={handleSubmit} className="decor-form">
+    <div className="decor-input-group">
+      <input
+        type="text"
+        name="name"
+        placeholder="Company Name"
+        value={formData.name}
+        onChange={handleChange}
+        required
+        className="decor-input"
+      />
     </div>
+    <div className="decor-input-group">
+      <input
+        type="text"
+        name="place"
+        placeholder="Place"
+        value={formData.place}
+        onChange={handleChange}
+        required
+        className="decor-input"
+      />
+    </div>
+    <div className="decor-input-group">
+      <input
+        type="number"
+        name="price"
+        placeholder="Price"
+        value={formData.price}
+        onChange={handleChange}
+        required
+        className="decor-input"
+      />
+    </div>
+
+    <div className="decor-button-group">
+      <button type="submit" className="decor-button">
+        {editingId ? 'Update Decoration' : 'Add Decoration'}
+      </button>
+      {editingId && (
+        <button
+          type="button"
+          onClick={() => {
+            setEditingId(null);
+            setFormData({ name: '', place: '', price: '' });
+            setMessage('');
+          }}
+          className="decor-button decor-cancel-button"
+        >
+          Cancel
+        </button>
+      )}
+    </div>
+  </form>
+
+  {message && <p className="decor-message">{message}</p>}
+
+  <h3 className="decor-subtitle">Your Decorations</h3>
+
+  <div className="decor-card-container">
+    {decorations.map(dec => (
+      <div key={dec._id} className="decor-card">
+        <h4 className="decor-card-title">{dec.name}</h4>
+        <p className="decor-card-location">📍 {dec.place}</p>
+        <p className="decor-card-price">💰 ₹{dec.price}</p>
+        <div className="decor-card-actions">
+          <button onClick={() => handleEdit(dec)} className="decor-card-btn">Edit</button>
+          <button onClick={() => handleDelete(dec._id)} className="decor-card-btn delete">Delete</button>
+        </div>
+      </div>
+    ))}
+  </div>
+</div>
+
   );
 };
 

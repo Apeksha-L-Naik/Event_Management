@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; // Assuming react-router-dom v6+
 import axios from 'axios';
+import '../Styles/dashboard.css';
 
 const Dashboard = () => {
   const [events, setEvents] = useState([]);
@@ -36,29 +37,29 @@ const Dashboard = () => {
   };
 
   return (
-    <div style={{ padding: '2rem' }}>
-      <h2>Your Events</h2>
-      {message && <p>{message}</p>}
+     <div className="userdash-container">
+      <h2 className="userdash-title">Your Events</h2>
+      {message && <p className="userdash-message">{message}</p>}
       {events.length === 0 && <p>No events found. Create some!</p>}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-        {events.map(event => (
-          <div key={event._id} style={{ border: '1px solid #ccc', padding: '1rem' }}>
+
+      <div className="userdash-event-list">
+        {events.map((event) => (
+          <div className="userdash-event-card" key={event._id}>
             <h3>{event.name}</h3>
-            <p>Date: {new Date(event.date).toLocaleDateString()}</p>
-            <p>Time: {event.time}</p>
+            <p><strong>Date:</strong> {new Date(event.date).toLocaleDateString()}</p>
+            <p><strong>Time:</strong> {event.time}</p>
             <p>{event.description}</p>
 
-            {/* Display assigned venue if exists */}
             {event.selectedVenue ? (
-  <div >
-    <h4>Selected Venue</h4>
-    <p><strong>Name:</strong> {event.selectedVenue.name}</p>
-    <p><strong>Place:</strong> {event.selectedVenue.place}</p>
-    <p><strong>Price:</strong> ₹{event.selectedVenue.price}</p>
-  </div>
-) : (
-  <p style={{ marginTop: '1rem', fontStyle: 'italic', color: '#666' }}>No venue selected yet.</p>
-)}
+              <div className="userdash-venue-info">
+                <h4>Selected Venue</h4>
+                <p><strong>Name:</strong> {event.selectedVenue.name}</p>
+                <p><strong>Place:</strong> {event.selectedVenue.place}</p>
+                <p><strong>Price:</strong> ₹{event.selectedVenue.price}</p>
+              </div>
+            ) : (
+              <p className="userdash-no-venue">No venue selected yet.</p>
+            )}
 
 {event.selectedFood ? (
   <div >
@@ -84,8 +85,8 @@ const Dashboard = () => {
 
             <div style={{ marginTop: '1rem' }}>
               <button onClick={() => handleAddDecoration(event._id)}>Add Decoration</button>
-              <button onClick={() => handleAddFood(event._id)} style={{ marginLeft: '1rem' }}>Add Food</button>
-              <button onClick={() => handleAddVenue(event._id)} style={{ marginLeft: '1rem' }}>Add Venue</button>
+              <button onClick={() => handleAddFood(event._id)}>Add Food</button>
+              <button onClick={() => handleAddVenue(event._id)}>Add Venue</button>
             </div>
           </div>
         ))}

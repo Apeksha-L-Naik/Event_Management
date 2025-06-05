@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import '../Styles/addfood.css';
 
 const AddFood = () => {
   const [formData, setFormData] = useState({
@@ -74,44 +75,65 @@ const AddFood = () => {
   };
 
   return (
-    <div style={{ padding: '2rem' }}>
-      <h2>{editId ? 'Edit' : 'Add'} Food Menu</h2>
-      <form onSubmit={handleSubmit} style={{ marginBottom: '2rem' }}>
-        <input
-          type="text"
-          name="companyName"
-          placeholder="Food Company Name"
-          value={formData.companyName}
-          onChange={handleChange}
-          required
-        /><br /><br />
-        <select name="foodType" value={formData.foodType} onChange={handleChange}>
-          <option value="veg">Veg</option>
-          <option value="non-veg">Non-Veg</option>
-        </select><br /><br />
-        <input
-          type="number"
-          name="price"
-          placeholder="Price"
-          value={formData.price}
-          onChange={handleChange}
-          required
-        /><br /><br />
-        <button type="submit">{editId ? 'Update' : 'Add Food'}</button>
+    <div className="food-container">
+      <h2 className="food-title">{editId ? 'Edit' : 'Add'} Food Menu</h2>
+      <form onSubmit={handleSubmit} className="food-form">
+        <div className="food-input-group">
+          <input
+            type="text"
+            name="companyName"
+            placeholder="Food Company Name"
+            value={formData.companyName}
+            onChange={handleChange}
+            required
+            className="food-input"
+          />
+        </div>
+        <div className="food-input-group">
+          <select
+            name="foodType"
+            value={formData.foodType}
+            onChange={handleChange}
+            className="food-input"
+          >
+            <option value="veg">Veg</option>
+            <option value="non-veg">Non-Veg</option>
+          </select>
+        </div>
+        <div className="food-input-group">
+          <input
+            type="number"
+            name="price"
+            placeholder="Price"
+            value={formData.price}
+            onChange={handleChange}
+            required
+            className="food-input"
+          />
+        </div>
+        <div className="food-button-group">
+          <button type="submit" className="food-button">
+            {editId ? 'Update' : 'Add Food'}
+          </button>
+        </div>
       </form>
 
-      {message && <p>{message}</p>}
+      {message && <p className="food-message">{message}</p>}
 
-      <h3>Your Food Menus</h3>
-      <ul>
+      <h3 className="food-subtitle">Your Food Menus</h3>
+      <div className="food-card-container">
         {foods.map(food => (
-          <li key={food._id}>
-            <strong>{food.companyName}</strong> - {food.foodType} - ₹{food.price}
-            <button onClick={() => handleEdit(food)} style={{ marginLeft: '1rem' }}>Edit</button>
-            <button onClick={() => handleDelete(food._id)} style={{ marginLeft: '0.5rem', color: 'red' }}>Delete</button>
-          </li>
+          <div key={food._id} className="food-card">
+            <h4 className="food-card-title">{food.companyName}</h4>
+            <p className="food-card-type">🍽 {food.foodType}</p>
+            <p className="food-card-price">₹{food.price}</p>
+            <div className="food-card-actions">
+              <button onClick={() => handleEdit(food)} className="food-card-btn">Edit</button>
+              <button onClick={() => handleDelete(food._id)} className="food-card-btn delete">Delete</button>
+            </div>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 };

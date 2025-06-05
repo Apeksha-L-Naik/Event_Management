@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
+import '../Styles/selectfood.css';
 
 const SelectFood= () => {
   const { eventId } = useParams();

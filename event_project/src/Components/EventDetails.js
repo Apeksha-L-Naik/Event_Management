@@ -1,9 +1,10 @@
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import '../Styles/eventdetails.css';
 
 const EventDetails = () => {
-  const { id } = useParams(); // Get event ID from URL
+  const { id } = useParams();
   const [event, setEvent] = useState(null);
 
   useEffect(() => {
@@ -17,18 +18,33 @@ const EventDetails = () => {
     fetchEvent();
   }, [id]);
 
-  if (!event) return <p>Loading...</p>;
+  if (!event) return <p className="loading">Loading...</p>;
 
   return (
-    <div>
-      <h2>{event.name}</h2>
-      <p>{event.description}</p>
-      <p>Date: {event.date}</p>
-      <p>Time: {event.time}</p>
+      <div className="event-fullscreen-card">
+      <div className="event-content-wrapper">
+        <h1 className="event-name-title">{event.name}</h1>
+        <p className="event-description-text">{event.description}</p>
 
-      <button onClick={() => window.location.href = `/event/${id}/select-venue`}>Select Venue</button>
-      <button onClick={() => window.location.href = `/event/${id}/select-food`}>Select Food</button>
-      <button onClick={() => window.location.href = `/event/${id}/select-decoration`}>Select Decoration</button>
+        <p className="event-date-line">
+          <span className="event-label">Date:</span> {event.date}
+        </p>
+        <p className="event-time-line">
+          <span className="event-label">Time:</span> {event.time}
+        </p>
+
+        <div className="event-button-group">
+          <button className="event-action-button" onClick={() => window.location.href = `/event/${id}/select-venue`}>
+            Select Venue
+          </button>
+          <button className="event-action-button" onClick={() => window.location.href = `/event/${id}/select-food`}>
+            Select Food
+          </button>
+          <button className="event-action-button" onClick={() => window.location.href = `/event/${id}/select-decoration`}>
+            Select Decoration
+          </button>
+        </div>
+      </div>
     </div>
   );
 };
